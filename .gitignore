@@ -1,0 +1,23 @@
+# --- 后端 ---
+# 忽略 Maven/Gradle 编译出来的 target 文件夹
+backend/target/
+
+# --- 前端 ---
+# 忽略 npm/yarn 安装的依赖包
+front/node_modules/
+
+# --- IDE 配置 ---
+# 忽略 IntelliJ IDEA 的配置
+.idea/
+*.iml
+
+# 忽略 VS Code 的配置（除了特定的几个）
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+
+# --- 系统文件 ---
+# 忽略 Mac 系统文件
+.DS_Store
+# 忽略 Windows 缩略图
+Thumbs.db
