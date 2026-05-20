@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuegong.mapper.LateRecordMapper">
+
+    <!-- 按班级统计晚归次数 -->
+    <select id="countByClassName" resultType="map">
+        SELECT class_name AS className, COUNT(*) AS count
+        FROM late_record
+        WHERE class_name IS NOT NULL
+        GROUP BY class_name
+        ORDER BY count DESC
+    </select>
+
+    <!-- 按日期统计晚归次数（最近30天） -->
+    <select id="countByDate" resultType="map">
+        SELECT date, COUNT(*) AS count
+        FROM late_record
+        WHERE date <![CDATA[ >= ]]> DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+        GROUP BY date
+        ORDER BY date
+    </select>
+
+    <!-- 统计异常晚归次数 -->
+    <select id="countAbnormal" resultType="long">
+        SELECT COUNT(*)
+        FROM late_record
+        WHERE abnormal = true
+    </select>
+
+    <!-- 按学生统计晚归次数（Top10） -->
+    <select id="countByStudentTop10" resultType="map">
+        SELECT student_code AS studentCode,
+               student_name AS studentName,
+               COUNT(*) AS count
+        FROM late_record
+        GROUP BY student_code, student_name
+        ORDER BY count DESC
+        LIMIT 10
+    </select>
+
+    <!-- 按月统计晚归趋势 -->
+    <select id="countByMonth" resultType="map">
+        SELECT DATE_FORMAT(date, '%Y-%m') AS month,
+               COUNT(*) AS count,
+               SUM(CASE WHEN abnormal = true THEN 1 ELSE 0 END) AS abnormalCount
+        FROM late_record
+        WHERE date IS NOT NULL
+        GROUP BY DATE_FORMAT(date, '%Y-%m')
+        ORDER BY month DESC
+        LIMIT 12
+    </select>
+
+</mapper>

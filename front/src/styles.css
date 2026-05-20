@@ -1,0 +1,199 @@
+:root {
+  --el-color-primary: #4f6ef7;
+  --el-color-primary-light-3: #7b93fa;
+  --el-color-primary-light-5: #a3b4fc;
+  --el-color-primary-light-7: #c8d3fd;
+  --el-color-primary-light-8: #dbdefe;
+  --el-color-primary-light-9: #edf0fe;
+  --el-color-primary-dark-2: #3f5bc5;
+  --el-color-success: #34c759;
+  --el-color-warning: #f5a623;
+  --el-color-danger: #ff3b30;
+  --el-color-info: #8e8e93;
+
+  --sidebar-width: 240px;
+  --header-height: 64px;
+  --border-radius: 10px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+  --bg-page: #f0f2f5;
+  --bg-card: #ffffff;
+  --text-primary: #1d2129;
+  --text-secondary: #4e5969;
+  --text-tertiary: #86909c;
+  --border-color: #e5e6eb;
+  --hover-bg: #f7f8fa;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+/* Element Plus - Card */
+.el-card {
+  border-radius: var(--border-radius) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: var(--shadow-sm) !important;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+.el-card:hover {
+  box-shadow: var(--shadow-md) !important;
+}
+.el-card__header {
+  border-bottom: 1px solid #f2f3f5 !important;
+  padding: 18px 24px !important;
+}
+.el-card__body {
+  padding: 20px 24px !important;
+}
+
+/* Element Plus - Table */
+.el-table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+.el-table th.el-table__cell {
+  background: #f7f8fa !important;
+  color: var(--text-secondary) !important;
+  font-weight: 600 !important;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+.el-table td.el-table__cell {
+  border-bottom: 1px solid #f2f3f5 !important;
+  font-size: 14px;
+}
+.el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
+  background: #fafbfc !important;
+}
+.el-table__row:hover > td.el-table__cell {
+  background: #f0f5ff !important;
+}
+
+/* Element Plus - Menu */
+.el-menu-item {
+  border-radius: 8px !important;
+  margin: 2px 0;
+  height: 44px !important;
+  line-height: 44px !important;
+  transition: all 0.2s ease;
+}
+.el-menu-item:hover {
+  background: var(--hover-bg) !important;
+}
+.el-menu-item.is-active {
+  background: linear-gradient(135deg, #4f6ef7 0%, #6366f1 100%) !important;
+  color: #fff !important;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(79, 110, 247, 0.3);
+}
+.el-menu-item.is-active .el-icon {
+  color: #fff !important;
+}
+
+/* Element Plus - Button */
+.el-button--primary {
+  background: linear-gradient(135deg, #4f6ef7 0%, #6366f1 100%) !important;
+  border: none !important;
+  box-shadow: 0 2px 6px rgba(79, 110, 247, 0.3);
+  transition: all 0.2s ease;
+}
+.el-button--primary:hover {
+  box-shadow: 0 4px 12px rgba(79, 110, 247, 0.4);
+  transform: translateY(-1px);
+}
+.el-button--primary:active {
+  transform: translateY(0);
+}
+
+/* Element Plus - Tag */
+.el-tag {
+  border-radius: 6px !important;
+  font-weight: 500;
+}
+
+/* Element Plus - Dialog */
+.el-dialog {
+  border-radius: 14px !important;
+  overflow: hidden;
+}
+.el-dialog__header {
+  padding: 20px 24px 16px !important;
+  border-bottom: 1px solid #f2f3f5;
+  margin-right: 0 !important;
+}
+.el-dialog__title {
+  font-weight: 600 !important;
+  font-size: 16px !important;
+}
+.el-dialog__body {
+  padding: 24px !important;
+}
+.el-dialog__footer {
+  padding: 16px 24px 20px !important;
+  border-top: 1px solid #f2f3f5;
+}
+
+/* Element Plus - Pagination */
+.el-pagination.is-background .el-pager li.is-active {
+  background: var(--el-color-primary) !important;
+}
+
+/* Element Plus - Input */
+.el-input__wrapper {
+  border-radius: 8px !important;
+  transition: box-shadow 0.2s ease;
+}
+.el-input__wrapper:hover {
+  box-shadow: 0 0 0 1px var(--el-color-primary-light-5) inset !important;
+}
+
+/* Element Plus - Select */
+.el-select__wrapper {
+  border-radius: 8px !important;
+}
+
+/* Element Plus - Tabs */
+.el-tabs__item {
+  font-weight: 500;
+}
+.el-tabs__active-bar {
+  border-radius: 2px;
+}
+
+/* Page transitions */
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: all 0.25s ease;
+}
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: #c9cdd4; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #a0a4ac; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* Utility: page fade-in */
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.page-enter {
+  animation: pageEnter 0.35s ease both;
+}

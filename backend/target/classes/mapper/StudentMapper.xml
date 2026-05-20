@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuegong.mapper.StudentMapper">
+
+    <!-- 按班级统计学生人数 -->
+    <select id="countByClassName" resultType="map">
+        SELECT class_name AS className, COUNT(*) AS count
+        FROM student
+        WHERE class_name IS NOT NULL
+        GROUP BY class_name
+        ORDER BY count DESC
+    </select>
+
+    <!-- 按状态统计学生人数 -->
+    <select id="countByStatus" resultType="map">
+        SELECT status, COUNT(*) AS count
+        FROM student
+        GROUP BY status
+    </select>
+
+    <!-- 获取班级列表 -->
+    <select id="findAllClassNames" resultType="string">
+        SELECT DISTINCT class_name
+        FROM student
+        WHERE class_name IS NOT NULL
+        ORDER BY class_name
+    </select>
+
+    <!-- 按性别统计学生人数 -->
+    <select id="countByGender" resultType="map">
+        SELECT gender, COUNT(*) AS count
+        FROM student
+        WHERE gender IS NOT NULL
+        GROUP BY gender
+    </select>
+
+    <!-- 统计学生总数 -->
+    <select id="countAll" resultType="long">
+        SELECT COUNT(*) FROM student
+    </select>
+
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuegong.mapper.ScholarshipApplyMapper">
+
+    <!-- 按状态统计申请数量 -->
+    <select id="countByStatus" resultType="map">
+        SELECT status, COUNT(*) AS count
+        FROM scholarship_apply
+        GROUP BY status
+    </select>
+
+    <!-- 按类型统计申请数量 -->
+    <select id="countByType" resultType="map">
+        SELECT type, COUNT(*) AS count
+        FROM scholarship_apply
+        GROUP BY type
+        ORDER BY count DESC
+    </select>
+
+    <!-- 按类型统计申请金额 -->
+    <select id="sumAmountByType" resultType="map">
+        SELECT type,
+               SUM(amount) AS totalAmount,
+               COUNT(*) AS count,
+               ROUND(AVG(amount), 2) AS avgAmount
+        FROM scholarship_apply
+        WHERE amount IS NOT NULL
+        GROUP BY type
+        ORDER BY totalAmount DESC
+    </select>
+
+    <!-- 按月统计申请数量 -->
+    <select id="countByMonth" resultType="map">
+        SELECT DATE_FORMAT(apply_time, '%Y-%m') AS month,
+               COUNT(*) AS count
+        FROM scholarship_apply
+        WHERE apply_time IS NOT NULL
+        GROUP BY DATE_FORMAT(apply_time, '%Y-%m')
+        ORDER BY month DESC
+        LIMIT 12
+    </select>
+
+    <!-- 统计总申请金额 -->
+    <select id="sumTotalAmount" resultType="map">
+        SELECT SUM(amount) AS totalAmount,
+               COUNT(*) AS totalCount,
+               ROUND(AVG(amount), 2) AS avgAmount
+        FROM scholarship_apply
+        WHERE amount IS NOT NULL
+    </select>
+
+</mapper>

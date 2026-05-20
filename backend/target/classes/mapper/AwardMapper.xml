@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuegong.mapper.AwardMapper">
+
+    <!-- 按级别统计奖项数量 -->
+    <select id="countByLevel" resultType="map">
+        SELECT level, COUNT(*) AS count
+        FROM award
+        WHERE level IS NOT NULL
+        GROUP BY level
+        ORDER BY count DESC
+    </select>
+
+    <!-- 按类型统计奖项数量 -->
+    <select id="countByType" resultType="map">
+        SELECT type, COUNT(*) AS count
+        FROM award
+        WHERE type IS NOT NULL
+        GROUP BY type
+        ORDER BY count DESC
+    </select>
+
+    <!-- 按学生统计获奖次数（Top10） -->
+    <select id="countByStudentTop10" resultType="map">
+        SELECT student_name AS studentName,
+               COUNT(*) AS awardCount,
+               SUM(bonus) AS totalBonus
+        FROM award
+        GROUP BY student_name
+        ORDER BY awardCount DESC
+        LIMIT 10
+    </select>
+
+    <!-- 统计总奖金 -->
+    <select id="sumTotalBonus" resultType="map">
+        SELECT SUM(bonus) AS totalBonus,
+               COUNT(*) AS totalCount,
+               ROUND(AVG(bonus), 2) AS avgBonus
+        FROM award
+        WHERE bonus IS NOT NULL
+    </select>
+
+    <!-- 按月统计获奖趋势 -->
+    <select id="countByMonth" resultType="map">
+        SELECT DATE_FORMAT(award_date, '%Y-%m') AS month,
+               COUNT(*) AS count
+        FROM award
+        WHERE award_date IS NOT NULL
+        GROUP BY DATE_FORMAT(award_date, '%Y-%m')
+        ORDER BY month DESC
+        LIMIT 12
+    </select>
+
+</mapper>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuegong.mapper.ScoreMapper">
+
+    <!-- 按课程统计平均分 -->
+    <select id="avgScoreByCourse" resultType="map">
+        SELECT course_name AS courseName,
+               ROUND(AVG(score), 2) AS avgScore,
+               COUNT(*) AS studentCount,
+               MAX(score) AS maxScore,
+               MIN(score) AS minScore
+        FROM score
+        GROUP BY course_name
+        ORDER BY avgScore DESC
+    </select>
+
+    <!-- 按学生统计平均分（GPA） -->
+    <select id="avgScoreByStudent" resultType="map">
+        SELECT student_code AS studentCode,
+               student_name AS studentName,
+               ROUND(AVG(score), 2) AS avgScore,
+               COUNT(*) AS courseCount
+        FROM score
+        GROUP BY student_code, student_name
+        ORDER BY avgScore DESC
+    </select>
+
+    <!-- 按学期统计平均分 -->
+    <select id="avgScoreBySemester" resultType="map">
+        SELECT semester,
+               ROUND(AVG(score), 2) AS avgScore,
+               COUNT(*) AS recordCount
+        FROM score
+        WHERE semester IS NOT NULL
+        GROUP BY semester
+        ORDER BY semester DESC
+    </select>
+
+    <!-- 获取学生成绩排名 -->
+    <select id="getStudentRanking" resultType="map">
+        SELECT student_code AS studentCode,
+               student_name AS studentName,
+               ROUND(AVG(score), 2) AS avgScore,
+               RANK() OVER (ORDER BY AVG(score) DESC) AS ranking
+        FROM score
+        <where>
+            <if test="semester != null and semester != ''">
+                AND semester = #{semester}
+            </if>
+        </where>
+        GROUP BY student_code, student_name
+        ORDER BY ranking
+    </select>
+
+    <!-- 按课程统计及格率 -->
+    <select id="passRateByCourse" resultType="map">
+        SELECT course_name AS courseName,
+               COUNT(*) AS totalCount,
+               SUM(CASE WHEN score <![CDATA[ >= ]]> 60 THEN 1 ELSE 0 END) AS passCount,
+               ROUND(SUM(CASE WHEN score <![CDATA[ >= ]]> 60 THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 2) AS passRate
+        FROM score
+        GROUP BY course_name
+        ORDER BY passRate DESC
+    </select>
+
+    <!-- 统计成绩分布 -->
+    <select id="scoreDistribution" resultType="map">
+        SELECT
+            SUM(CASE WHEN score <![CDATA[ >= ]]> 90 THEN 1 ELSE 0 END) AS excellent,
+            SUM(CASE WHEN score <![CDATA[ >= ]]> 80 AND score <![CDATA[ < ]]> 90 THEN 1 ELSE 0 END) AS good,
+            SUM(CASE WHEN score <![CDATA[ >= ]]> 70 AND score <![CDATA[ < ]]> 80 THEN 1 ELSE 0 END) AS medium,
+            SUM(CASE WHEN score <![CDATA[ >= ]]> 60 AND score <![CDATA[ < ]]> 70 THEN 1 ELSE 0 END) AS pass,
+            SUM(CASE WHEN score <![CDATA[ < ]]> 60 THEN 1 ELSE 0 END) AS fail,
+            COUNT(*) AS total
+        FROM score
+    </select>
+
+</mapper>

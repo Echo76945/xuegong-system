@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuegong.mapper.ExtracurricularMapper">
+
+    <!-- 按类别统计活动数量 -->
+    <select id="countByCategory" resultType="map">
+        SELECT category, COUNT(*) AS count
+        FROM extracurricular
+        WHERE category IS NOT NULL
+        GROUP BY category
+        ORDER BY count DESC
+    </select>
+
+    <!-- 按学生汇总积分（Top10） -->
+    <select id="sumPointsByStudentTop10" resultType="map">
+        SELECT student_name AS studentName,
+               SUM(points) AS totalPoints,
+               COUNT(*) AS activityCount
+        FROM extracurricular
+        WHERE points IS NOT NULL
+        GROUP BY student_name
+        ORDER BY totalPoints DESC
+        LIMIT 10
+    </select>
+
+    <!-- 按状态统计活动数量 -->
+    <select id="countByStatus" resultType="map">
+        SELECT status, COUNT(*) AS count
+        FROM extracurricular
+        GROUP BY status
+    </select>
+
+    <!-- 统计总积分 -->
+    <select id="sumTotalPoints" resultType="map">
+        SELECT SUM(points) AS totalPoints,
+               COUNT(*) AS totalCount,
+               ROUND(AVG(points), 2) AS avgPoints
+        FROM extracurricular
+        WHERE points IS NOT NULL
+    </select>
+
+    <!-- 按月统计活动参与趋势 -->
+    <select id="countByMonth" resultType="map">
+        SELECT DATE_FORMAT(date, '%Y-%m') AS month,
+               COUNT(*) AS count
+        FROM extracurricular
+        WHERE date IS NOT NULL
+        GROUP BY DATE_FORMAT(date, '%Y-%m')
+        ORDER BY month DESC
+        LIMIT 12
+    </select>
+
+</mapper>
