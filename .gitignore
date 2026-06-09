@@ -1,23 +1,56 @@
-# --- 后端 ---
-# 忽略 Maven/Gradle 编译出来的 target 文件夹
-backend/target/
+# ========================================
+#              根目录通用忽略
+# ========================================
 
-# --- 前端 ---
-# 忽略 npm/yarn 安装的依赖包
+# --- 敏感文件（最重要）---
+*.local.properties
+application-prod.properties
+application-*.local.properties
+.env
+.env*.local
+*.key
+secrets.properties
+
+# --- 构建目录 ---
+backend/target/
+front/dist/
+front/.vite/
+
+# --- 依赖目录 ---
 front/node_modules/
 
-# --- IDE 配置 ---
-# 忽略 IntelliJ IDEA 的配置
+# --- IDE 和编辑器 ---
 .idea/
 *.iml
-
-# 忽略 VS Code 的配置（除了特定的几个）
 .vscode/*
 !.vscode/settings.json
 !.vscode/launch.json
+*.sublime-*
 
-# --- 系统文件 ---
-# 忽略 Mac 系统文件
+# --- 系统和临时文件 ---
 .DS_Store
-# 忽略 Windows 缩略图
 Thumbs.db
+*.log
+logs/
+
+# --- 其他常见忽略 ---
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# --- 前端特定 ---
+front/.env*.local
+front/coverage/
+front/npm-debug.log*
+front/yarn-debug.log*
+front/yarn-error.log*
+
+# --- 数据库备份等 ---
+*.sql.bak
+*.dump
+
+# --- Git 本身 ---
+.gitignore.local
